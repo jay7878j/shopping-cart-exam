@@ -1,0 +1,237 @@
+# Pseudo Code for Shopping Cart Web Application
+
+# Define Product structure
+Product {
+  id: integer
+  productImg: string
+  price: string
+  title: string
+  quantity: integer
+}
+
+# Initialize products list and cart list
+productsList = [Product]
+cartList = [Product]
+
+# Initialize HTML container elements
+productsListContainer = HTML Element
+filterContainer = HTML Element
+cartListContainer = HTML Element
+cartSummaryContainer = HTML Element
+
+# Function to add a product to the cart
+function addToCart(product: Product) {
+  productObject = findProductById(product.id, cartList)
+
+  if (productObject is undefined) {
+    cartList.push(product)
+  } else {
+    updateProductQuantity(product.id, product.quantity + 1, cartList)
+  }
+
+  renderProducts(cartListContainer, cartList)
+  renderFilter()
+  renderCartSummary(cartList)
+}
+
+# Function to remove a product from the cart
+function removeCartItem(product: Product) {
+  filterList = filterProductsById(product.id, cartList)
+  cartList = filterList
+
+  renderProducts(cartListContainer, cartList)
+  renderCartSummary(cartList)
+}
+
+# Function to render products in a container
+function renderProducts(container: HTML Element, list: [Product]) {
+  container.textContent = ""
+
+  for each product in list {
+    productListItem = createProductListItem(product)
+    container.appendChild(productListItem)
+  }
+}
+
+# Function to create a product list item HTML element
+function createProductListItem(product: Product): HTML Element {
+  productListItem = HTML Element
+  productInfo = createProductInfoElement(product)
+  productBtnContainer = createProductBtnContainer(product)
+
+  productListItem.appendChild(productInfo)
+  productListItem.appendChild(productBtnContainer)
+
+  return productListItem
+}
+
+# Function to create a product info HTML element
+function createProductInfoElement(product: Product): HTML Element {
+  productInfo = HTML Element
+  productImgEl = HTML Element
+  productDetails = HTML Element
+  productTitleEl = HTML Element
+  productPriceEl = HTML Element
+
+  # Set attributes and content for each element
+
+  productInfo.appendChild(productImgEl)
+  productInfo.appendChild(productDetails)
+  productDetails.appendChild(productTitleEl)
+  productDetails.appendChild(productPriceEl)
+
+  return productInfo
+}
+
+# Function to create a product button container HTML element
+function createProductBtnContainer(product: Product): HTML Element {
+  productBtnContainer = HTML Element
+
+  if (container is not cartListContainer) {
+    addToCartBtn = HTML Element
+    addToCartBtn.addEventListener("click", addToCart(product))
+    productBtnContainer.appendChild(addToCartBtn)
+  } else {
+    deleteEl = HTML Element
+    deleteEl.addEventListener("click", removeCartItem(product))
+    productBtnContainer.appendChild(deleteEl)
+  }
+
+  return productBtnContainer
+}
+
+# Function to handle product search
+function onProductSearch(e: Event) {
+  userSearchValue = e.target.value
+  filterList = filterProductsBySearch(userSearchValue, cartList)
+  renderProducts(cartListContainer, filterList)
+}
+
+# Function to render the filter section
+function renderFilter() {
+  filterContainer.textContent = ""
+
+  leftFilterSection = createLeftFilterSection()
+  rightFilterSection = createRightFilterSection()
+
+  filterContainer.appendChild(leftFilterSection)
+  filterContainer.appendChild(rightFilterSection)
+}
+
+# Function to create the left filter section HTML element
+function createLeftFilterSection(): HTML Element {
+  leftFilterSection = HTML Element
+  searchBox = HTML Element
+  searchBox.addEventListener("input", onProductSearch)
+
+  leftFilterSection.appendChild(searchBox)
+
+  return leftFilterSection
+}
+
+# Function to create the right filter section HTML element
+function createRightFilterSection(): HTML Element {
+  rightFilterSection = HTML Element
+  clearCart = HTML Element
+  clearCart.addEventListener("click", clearCartItems)
+
+  rightFilterSection.appendChild(clearCart)
+
+  return rightFilterSection
+}
+
+# Function to clear cart items
+function clearCartItems() {
+  cartList = []
+  renderProducts(cartListContainer, cartList)
+  renderCartSummary(cartList)
+}
+
+# Function to render the cart summary
+function renderCartSummary(cartList: [Product]) {
+  cartSummaryContainer.textContent = ""
+
+  price = calculateTotalPrice(cartList)
+  avg = calculateAveragePrice(cartList)
+
+  avgCartItem = createCartSummaryElement("Average Product Price", "Rs. " + avg)
+  horizontal = createHorizontalLine()
+  totalPrice = createCartSummaryElement("Total Products Price", "Rs. " + price)
+
+  cartSummaryContainer.appendChild(avgCartItem)
+  cartSummaryContainer.appendChild(horizontal)
+  cartSummaryContainer.appendChild(totalPrice)
+}
+
+# Function to calculate the total price of cart items
+function calculateTotalPrice(cartList: [Product]): string {
+  total = 0
+
+  for each product in cartList {
+    total += product.price * product.quantity
+  }
+
+  return total
+}
+
+# Function to calculate the average price of cart items
+function calculateAveragePrice(cartList: [Product]): string {
+  total = calculateTotalPrice(cartList)
+
+  if (total is not 0) {
+    avg = parseInt(total / cartList.length)
+    return avg
+  } else {
+    return 0
+  }
+}
+
+# Function to find a product in a list by its id
+function findProductById(id: integer, productList: [Product]): Product {
+  return product with matching id in productList
+}
+
+# Function to update the quantity of a product in a list
+function updateProductQuantity(id: integer, quantity: integer, productList: [Product]) {
+  for each product in productList {
+    if product.id equals id {
+      product.quantity = quantity
+    }
+  }
+}
+
+# Function to filter products in a list by their id
+function filterProductsById(id: integer, productList: [Product]): [Product] {
+  return list of products with id not equal to the specified id in productList
+}
+
+# Function to filter products in a list by search criteria
+function filterProductsBySearch(searchValue: string, productList: [Product]): [Product] {
+  return list of products with matching search criteria in productList
+}
+
+# Function to create a horizontal line HTML element
+function createHorizontalLine(): HTML Element {
+  horizontalLine = HTML Element
+  # Set attributes for the horizontal line
+  return horizontalLine
+}
+
+# Function to create a cart summary HTML element
+function createCartSummaryElement(heading: string, price: string): HTML Element {
+  cartSummaryItem = HTML Element
+  cartSummaryHeading = HTML Element
+  cartSummaryPrice = HTML Element
+
+  # Set attributes and content for each element
+
+  cartSummaryItem.appendChild(cartSummaryHeading)
+  cartSummaryItem.appendChild(cartSummaryPrice)
+
+  return cartSummaryItem
+}
+
+# Initial setup
+renderFilter()
+renderProducts(productsListContainer, productsList)
+renderCartSummary(cartList)

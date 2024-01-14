@@ -4,26 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jay Trendz</title>
+    <script
+      src="https://kit.fontawesome.com/41d4dca1de.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <script src="index.js" defer></script>
   </head>
   <body>
-    <div class="main-container">
-      <div class="products-section">
-        <h1 class="product-heading">Gadget Products</h1>
-        <ul class="products-list" id="productsListContainer"></ul>
-      </div>
-      <hr />
-      <div class="cart-section">
-        <div class="filter-section" id="filterContainer"></div>
-        <div class="products-section">
-          <h1 class="product-heading">Cart</h1>
-          <ul class="products-list" id="cartListContainer"></ul>
+    <div class="main-container" id="mainContainer">
+      <header class="header" id="header">
+        <h2 class="logo-text">JaytrendZ</h2>
+      </header>
+      <div class="app-container">
+        <div class="products-section" id="products">
+          <h1 class="product-heading">Gadget Products</h1>
+          <ul class="products-list" id="productsListContainer"></ul>
         </div>
+        <hr />
+        <div class="cart-section" id="cartSection">
+          <div class="filter-section" id="filterContainer"></div>
+          <div class="products-section">
+            <h1 class="product-heading">Cart</h1>
+            <ul class="products-list" id="cartListContainer">
+              <p class="empty-cart-title" id="cartEmptyTitle">
+                Time to shop! Your cart is eager for some fantastic additions.
+              </p>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <h1 class="summary">Cart Summary</h1>
+        <div class="cart-summary-section" id="cartSummaryConatiner"></div>
       </div>
-      <hr />
-      <h1 class="summary">Cart Summary</h1>
-      <div class="cart-summary-section" id="cartSummaryConatiner"></div>
+      <footer class="footer" id="footerSection"></footer>
     </div>
   </body>
 </html>
